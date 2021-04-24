@@ -18,6 +18,7 @@ module.exports = {
     ],
     'rules': {
         quotes: ['error', 'single'],
+        '@typescript-eslint/no-inferrable-types': 'off',
         '@typescript-eslint/consistent-type-assertions': [
             'error',
             {
