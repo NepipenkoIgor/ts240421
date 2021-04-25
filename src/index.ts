@@ -1,119 +1,65 @@
-/** Object/Functions**/
+// function fn(_a: any, _b) {
 //
-// interface IPoint {
-//     x: number;
-//     y: number;
 // }
 //
-// type TPoint = {
-//     x: number;
-//     y: number;
-// }
-//
-//
-// interface ISum {
-//     (a: number, b: number): number
-// }
-//
-// type TSum = (a: number, b: number) => number
-//
-//
-// const p1: TPoint = {
-//     x: 1,
-//     y: 1
-// }
-//
-// const sum: TSum = (a: number, b: number) => {
-//     return a + b;
-// }
+// fn(123);
+// fn(,{a: 1});
 
-/**extends*/
-// type TX = {
-//     x: number
-// }
-//
-// type TY = {
-//     y: number
-// }
-//
-// interface IX {
-//     x: number
-//     z: { c2: string };
-// }
-//
-// interface IY {
-//     z: { c1: number };
-//     y: number
-// }
-//
-//
-// interface IPoint extends IX, IY {
-//     z: { c1: number, c2: string }
-// }
-//
-// type TPoint = TX & IY;
-//
-// const p: IPoint = {
-//     x: 1,
-//     y: 1,
-//     z: {c1: 1, c2: '2'}
-// }
+// interface/type/fn/class
 
-/*implements*/
 
-// type TX = {
-//     x: number
+// interface IUser<ID = number, GeneralInfo extends { male: boolean } = { male: boolean}> {
+//     id: ID,
+//     name: string,
+//     info: GeneralInfo
+// }
+// interface IUser<ID = number, GeneralInfo extends { male: boolean } = { male: boolean}> {
+//     id: ID,
+//     name: string,
+//     info: GeneralInfo
 // }
 //
-// type TY = {
-//     y: number
+// const user: IUser<string> = {
+//     id: '1',
+//     name: 'Ihor',
+//     info: {
+//         male: true
+//     }
 // }
 //
-// interface IX {
-//     x: number
-// }
 //
-// interface IY {
-//     y: number
+// const admin: IUser<string, { male: boolean, subjects: string[] }> = {
+//     id: '1',
+//     name: 'Ihor',
+//     info: {
+//         subjects: ['TS', 'Angular'],
+//         male: true
+//     }
 // }
-//
-// class Point implements IX, TY {
-//     public x = 1;
-//     public y = 1;
-// }
-
-type snb = string | number | boolean;
-
 
 interface IUser {
     name: string;
-    age: number;
+    age: number
+}
+
+interface IProduct {
+    name: string;
+    price: number
+}
+
+interface IState {
+    user: IUser;
+    products: IProduct[];
 }
 
 
-const user: IUser = {
-    name: 'Ihor',
-    age: 35,
-    male: true
+type Select<T> = <F extends keyof T>(state: T, field: F) => T[F];
+
+const state: IState = {
+    user: {name: 'Ihor', age: 35},
+    products: [{name: 'IPhone XR', price: 100}]
 }
+const select: Select<IState> = (state, field) => state[field];
 
-
-
-
-
-
-
-
-
-interface IUser {
-    male: boolean
-}
-
-
-interface IAdmin extends IUser{
-    subject: string[]
-}
-
-type UserState = IUser | IAdmin;
-
-
+const user: IUser = select(state, 'user');
+const products: IProduct[] = select(state, 'products');
